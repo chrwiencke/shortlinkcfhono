@@ -62,13 +62,18 @@ app.get('/', (c) => {
 </head>
 <body>
     <form hx-post="/submit" hx-trigger="submit" hx-target="#response">
-        <label for="userInput">Enter something:</label>
-        <input type="text" id="userInput" name="userInput" required>
+        <label for="vanity">Vanity:</label>
+        <input type="text" id="vanity" name="vanity" required>
+        <br>
+        <label for="url">URL:</label>
+        <input type="text" id="url" name="url" required>
+        <br>
         <input type="submit" value="Submit">
     </form>
 
     <div id="response"></div>
 </body>
+
 </html>
 `
 )
