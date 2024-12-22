@@ -75,6 +75,13 @@ app.get('/', (c) => {
     </form>
 
     <div id="response"></div>
+	<script>
+    function handleError(event) {
+        const target = document.querySelector('#response');
+        target.innerHTML = event.detail.xhr.responseText;
+    }
+	</script>
+
 </body>
 
 </html>
