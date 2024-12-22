@@ -64,7 +64,7 @@ app.get('/', (c) => {
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 </head>
 <body>
-    <form hx-post="/submit" hx-trigger="submit" hx-target="#response">
+    <form hx-post="/submit" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML">
         <label for="vanity">Vanity:</label>
         <input type="text" id="vanity" name="vanity" required>
         <br>
