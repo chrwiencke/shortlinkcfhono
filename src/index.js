@@ -116,6 +116,19 @@ app.get('/', (c) => {
 		box-sizing: border-box;
 	}
 
+	.footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background-color: #000000;
+		border-top: 2px solid #55FFFF;
+		padding: 15px;
+		text-align: center;
+		font-family: 'Courier New', monospace;
+		color: #FFFF55;
+	}
+
 	/* Container for the form and response */
 	.container {
 		width: 100%;
@@ -125,6 +138,7 @@ app.get('/', (c) => {
 		align-items: center;
 		justify-content: center;
 		gap: 20px;
+		margin-bottom: 70px;
 	}
 
 	/* Form styles */
@@ -202,16 +216,16 @@ app.get('/', (c) => {
 	}
 	
 	.info-box {
-    background-color: #000000;
-    color: #FFFF55;
-    border: 2px solid #55FFFF;
-    padding: 15px;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-    box-sizing: border-box;
-    font-weight: bold;
+		background-color: #000000;
+		color: #FFFF55;
+		border: 2px solid #55FFFF;
+		padding: 15px;
+		margin-bottom: 20px;
+		width: 100%;
+		max-width: 600px;
+		text-align: center;
+		box-sizing: border-box;
+		font-weight: bold;
 	}
 
 	/* Link styles */
@@ -251,6 +265,9 @@ app.get('/', (c) => {
         </form>
 
         <div id="response"></div>
+    </div>
+	<div class="footer">
+        ╾━╤デ╦︻ You might like this: <a href="https://donotshow.me/">donotshow.me</a> ︻╦デ╤━╾
     </div>
 </body>
 </html>
