@@ -78,7 +78,7 @@ app.post('/submit', async (c) => {
         const hostname = c.req.url.split('/submit')[0];
         return c.html(`
             <div class="message success">
-                ${id} successfully stored! Here is the link: 
+                <p>${id} successfully created!</p>
                 <a href="${hostname}/${id}">${hostname}/${id}</a>
             </div>
         `);
