@@ -96,96 +96,148 @@ app.get('/', (c) => {
     <meta charset="UTF-8">
     <title>URL Shortener</title>
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-    <style>
-        /* Base styles */
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
+<style>
+	/* Base styles - TempleOS inspired */
+	html, body {
+		height: 100vh;
+		margin: 0;
+		padding: 0;
+		background-color: #000000;
+		font-family: 'Courier New', monospace;
+	}
 
-        /* Form styles */
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+	body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		color: #FFFFFF;
+		padding: 20px;
+		box-sizing: border-box;
+	}
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+	/* Container for the form and response */
+	.container {
+		width: 100%;
+		max-width: 800px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+	}
 
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+	/* Form styles */
+	form {
+		background-color: #000000;
+		padding: 30px;
+		border: 2px solid #55FFFF;
+		width: 100%;
+		max-width: 600px;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
-        input[type="submit"] {
-            background-color: #0066cc;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+	label {
+		display: block;
+		margin-bottom: 5px;
+		font-weight: bold;
+		color: #FFFF55;
+		text-transform: uppercase;
+		width: 100%;
+		text-align: center;
+	}
 
-        input[type="submit"]:hover {
-            background-color: #0052a3;
-        }
+	input[type="text"] {
+		width: 90%;
+		padding: 8px;
+		margin-bottom: 15px;
+		border: 2px solid #55FFFF;
+		background-color: #000000;
+		color: #FFFFFF;
+		text-align: center;
+		font-family: 'Courier New', monospace;
+	}
 
-        /* Message styles */
-        .message {
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 4px;
-        }
+	input[type="submit"] {
+		background-color: #000000;
+		color: #55FF55;
+		padding: 15px 30px;
+		border: 2px solid #55FF55;
+		cursor: pointer;
+		font-weight: bold;
+		text-transform: uppercase;
+		font-family: 'Courier New', monospace;
+		margin-top: 10px;
+	}
 
-        .error {
-            background-color: #ffebee;
-            color: #c62828;
-            border: 1px solid #ffcdd2;
-        }
+	input[type="submit"]:hover {
+		background-color: #55FF55;
+		color: #000000;
+	}
 
-        .success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
+	/* Message styles */
+	.message {
+		padding: 15px;
+		margin: 20px 0;
+		width: 100%;
+		max-width: 600px;
+		border: 2px solid #55FFFF;
+		text-align: center;
+		box-sizing: border-box;
+	}
 
-        /* Link styles */
-        a {
-            color: #0066cc;
-            text-decoration: none;
-        }
+	.error {
+		background-color: #000000;
+		color: #FF5555;
+		border-color: #FF5555;
+	}
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+	.success {
+		background-color: #000000;
+		color: #55FF55;
+		border-color: #55FF55;
+	}
+
+	/* Link styles */
+	a {
+		color: #55FFFF;
+		text-decoration: none;
+		font-weight: bold;
+	}
+
+	a:hover {
+		color: #FFFF55;
+		text-decoration: underline;
+	}
+
+	#response {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
 </head>
 <body>
-    <form hx-post="/submit" 
-        hx-trigger="submit" 
-        hx-target="#response" 
-        hx-swap="innerHTML">
-        <label for="vanity">Vanity:</label>
-        <input type="text" id="vanity" name="vanity" required>
-        <br>
-        <label for="url">URL:</label>
-        <input type="text" id="url" name="url" required>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container">
+        <form hx-post="/submit" 
+            hx-trigger="submit" 
+            hx-target="#response" 
+            hx-swap="innerHTML">
+            <label for="vanity">Vanity:</label>
+            <input type="text" id="vanity" name="vanity" required>
+            <br>
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url" required>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
 
-    <div id="response"></div>
+        <div id="response"></div>
+    </div>
 </body>
 </html>
 `)
