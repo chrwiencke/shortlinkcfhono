@@ -37,9 +37,9 @@ app.post('/submit', async (c) => {
 
         // Check if the key already exists
         const idAlreadyExists = await c.env.KV.get(id);
-        console.log("ID Already Exits:", idAlreadyExists);
 
         if (idAlreadyExists) {
+			console.log("ID Already Exits:", idAlreadyExists);
             return c.text(`${id} already exists`, 409); // Conflict
         }
 
