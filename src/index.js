@@ -47,21 +47,21 @@ app.post('/submit', async (c) => {
         const urlValidationMessage = validateURL(urlInput);
 
         if (urlValidationMessage !== "URL is valid") {
-            return c.text(urlValidationMessage, 400);
+            return c.text(urlValidationMessage);
         }
 
         const idAlreadyExists = await c.env.KV.get(id);
 
         if (idAlreadyExists !== null) {
             console.log("ID Already Exists:", idAlreadyExists);
-            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`, 409);
+            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`);
         }
 
         await c.env.KV.put(id, urlInput, { expirationTtl: 3600 });
 
         console.log(`Stored ${id}: ${urlInput}`);
 
-        return c.text(`${id} successfully stored!`, 201);
+        return c.text(`${id} successfully stored!`);
     } catch (error) {
         console.error('Error handling submission:', error);
         return c.text('An error occurred', 500);
