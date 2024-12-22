@@ -18,37 +18,40 @@ app.get('/:id', async (c) => {
 })
 
 app.post('/submit', async (c) => {
-	try {
-		const formData = await c.req.formData();
+    try {
+        const formData = await c.req.formData();
 
-		console.log(1 + formData)
-
-		const formObject = {};
-		formData.forEach((value, key) => {
+        // Convert FormData to an object
+        const formObject = {};
+        formData.forEach((value, key) => {
             formObject[key] = value;
         });
 
-		console.log(2 + formObject)
+        console.log("Form Data Object:", formObject);
 
-		const id = formObject['userInput'];
+        const id = formObject['vanity']; // Use the 'vanity' field as the key
+        const url = formObject['url'];   // Use the 'url' field as the value
 
-		console.log(3 + "id")
+        console.log("Vanity ID:", id);
+        console.log("URL:", url);
 
-		const idAlreadyExists = await c.env.KV.get(id)
+        // Check if the key already exists
+        const idAlreadyExists = await c.env.KV.get(id);
+        conssole.log("ID Already Exits:", idAlreadyExists);
 
-		console.log(4 + idAlreadyExists)
+        if (idAlreadyExists) {
+            return c.text(`${id} already exists`, 409); // Conflict
+        }
 
-		if (idAlreadyExists) {
-			return c.text(id + ' Already exists')
-		}
-		
-		await c.env.KV.put(id);
+        // Store the key-value pair
+        await c.env.KV.put(id, url); // Store 'url' as the value
 
-	} catch (error) {
-		console.error('Error handling redirect:', error);
-		return c.text('An error occurred', 500);
-	}
-})
+        return c.text(`${id} successfully stored!`, 201); // Created
+    } catch (error) {
+        console.error('Error handling redirect:', error);
+        return c.text('An error occurred', 500);
+    }
+});
 
 app.get('/', (c) => {
     return c.html(
