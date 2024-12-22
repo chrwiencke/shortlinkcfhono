@@ -5,7 +5,7 @@ function validateURL(url) {
     if (!/^https?:\/\//.test(url)) {
         return "No http/https in URL";
     }
-    if (!/^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(url)) {
+    if (!/^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/.test(url)) {
         return "Invalid domain format";
     }
     return "URL is valid";
@@ -54,7 +54,7 @@ app.post('/submit', async (c) => {
 
         if (idAlreadyExists !== null) {
             console.log("ID Already Exists:", idAlreadyExists);
-            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`);
+            return c.text(`${id} already exists.`);
         }
 
         await c.env.KV.put(id, urlInput, { expirationTtl: 3600 });
