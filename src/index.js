@@ -74,6 +74,8 @@ app.get('/', (c) => {
         <input type="submit" value="Submit">
     </form>
 
+	<p>Hello World</p>
+
     <div id="response"></div>
 </body>
 
