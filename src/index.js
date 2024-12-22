@@ -21,20 +21,27 @@ app.post('/submit', async (c) => {
 	try {
 		const formData = await c.req.formData();
 
+		console.log(formData)
+
 		const formObject = {};
 		formData.forEach((value, key) => {
             formObject[key] = value;
         });
 
+		console.log(formObject)
+
 		const id = formObject['userInput'];
 
+		console.log(id)
 
 		const idAlreadyExists = await c.env.KV.get(id)
+
+		console.log(idAlreadyExists)
 
 		if (idAlreadyExists) {
 			return c.text(id + ' Already exists')
 		}
-
+		
 		await c.env.KV.put(id);
 
 	} catch (error) {
