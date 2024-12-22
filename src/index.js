@@ -39,8 +39,8 @@ app.post('/submit', async (c) => {
         const idAlreadyExists = await c.env.KV.get(id);
 
         if (idAlreadyExists !== null) {
-			console.log("ID Already Exits:", idAlreadyExists);
-            return c.text(`${id} already exists`, 409); // Conflict
+            console.log("ID Already Exists:", idAlreadyExists);
+            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`, 409); // Conflict
         }
 
         // Store the key-value pair
@@ -48,7 +48,7 @@ app.post('/submit', async (c) => {
 
         return c.text(`${id} successfully stored!`, 201); // Created
     } catch (error) {
-        console.error('Error handling redirect:', error);
+        console.error('Error handling submission:', error);
         return c.text('An error occurred', 500);
     }
 });
