@@ -61,7 +61,8 @@ app.post('/submit', async (c) => {
 
         console.log(`Stored ${id}: ${urlInput}`);
 
-        return c.text(`${id} successfully stored!`);
+        const hostname = c.req.url.split('/submit')[0];
+        return c.text(`${id} successfully stored! Here is the link: ${hostname}/${id}`);
     } catch (error) {
         console.error('Error handling submission:', error);
         return c.text('An error occurred', 500);
