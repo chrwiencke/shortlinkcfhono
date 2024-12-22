@@ -40,13 +40,13 @@ app.post('/submit', async (c) => {
 
         if (idAlreadyExists !== null) {
             console.log("ID Already Exists:", idAlreadyExists);
-            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`, 409); // Conflict
+            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`); // Conflict
         }
 
         // Store the key-value pair
         await c.env.KV.put(id, url, { expirationTtl: 3600 }); // Store 'url' as the value
 
-        return c.text(`${id} successfully stored!`, 201); // Created
+        return c.text(`${id} successfully stored!`); // Created
     } catch (error) {
         console.error('Error handling submission:', error);
         return c.text('An error occurred', 500);
