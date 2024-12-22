@@ -44,7 +44,7 @@ app.post('/submit', async (c) => {
         }
 
         // Store the key-value pair
-        await c.env.KV.put(id, url); // Store 'url' as the value
+        await c.env.KV.put(id, url, { expirationTtl: 3600 }); // Store 'url' as the value
 
         return c.text(`${id} successfully stored!`, 201); // Created
     } catch (error) {
@@ -64,7 +64,10 @@ app.get('/', (c) => {
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 </head>
 <body>
-    <form hx-post="/submit" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" hx-on="htmx:responseError: handleError">
+    <form hx-post="/submit" 
+		hx-trigger="submit" 
+		hx-target="#response" 
+		hx-swap="innerHTML">
         <label for="vanity">Vanity:</label>
         <input type="text" id="vanity" name="vanity" required>
         <br>
@@ -75,15 +78,8 @@ app.get('/', (c) => {
     </form>
 
     <div id="response"></div>
-	<script>
-    function handleError(event) {
-        const target = document.querySelector('#response');
-        target.innerHTML = event.detail.xhr.responseText;
-    }
-	</script>
 
 </body>
-
 </html>
 `
 )
