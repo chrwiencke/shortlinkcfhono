@@ -200,6 +200,19 @@ app.get('/', (c) => {
 		color: #55FF55;
 		border-color: #55FF55;
 	}
+	
+	.info-box {
+    background-color: #000000;
+    color: #FFFF55;
+    border: 2px solid #55FFFF;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: bold;
+	}
 
 	/* Link styles */
 	a {
@@ -223,6 +236,7 @@ app.get('/', (c) => {
 </head>
 <body>
     <div class="container">
+		<div class="info-box">INFO: ALL URLS EXPIRE IN 1 HOUR</div>
         <form hx-post="/submit" 
             hx-trigger="submit" 
             hx-target="#response" 
