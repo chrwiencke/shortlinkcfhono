@@ -1,6 +1,16 @@
 import { Hono } from 'hono'
 const app = new Hono()
 
+function validateURL(url) {
+    if (!/^https?:\/\//.test(url)) {
+        return "No http/https in URL";
+    }
+    if (!/^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(url)) {
+        return "Invalid domain format";
+    }
+    return "URL is valid";
+}
+
 app.get('/:id', async (c) => {
 	try {
 		const id = c.req.param('id')
@@ -21,7 +31,6 @@ app.post('/submit', async (c) => {
     try {
         const formData = await c.req.formData();
 
-        // Convert FormData to an object
         const formObject = {};
         formData.forEach((value, key) => {
             formObject[key] = value;
@@ -29,29 +38,36 @@ app.post('/submit', async (c) => {
 
         console.log("Form Data Object:", formObject);
 
-        const id = formObject['vanity']; // Use the 'vanity' field as the key
-        const url = formObject['url'];   // Use the 'url' field as the value
+        const id = formObject['vanity'];
+        const urlInput = formObject['url'];
 
         console.log("Vanity ID:", id);
-        console.log("URL:", url);
+        console.log("URL Input:", urlInput);
 
-        // Check if the key already exists
+        const urlValidationMessage = validateURL(urlInput);
+
+        if (urlValidationMessage !== "URL is valid") {
+            return c.text(urlValidationMessage, 400);
+        }
+
         const idAlreadyExists = await c.env.KV.get(id);
 
         if (idAlreadyExists !== null) {
             console.log("ID Already Exists:", idAlreadyExists);
-            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`); // Conflict
+            return c.text(`${id} already exists. Current value: ${idAlreadyExists}`, 409);
         }
 
-        // Store the key-value pair
-        await c.env.KV.put(id, url, { expirationTtl: 3600 }); // Store 'url' as the value
+        await c.env.KV.put(id, urlInput, { expirationTtl: 3600 });
 
-        return c.text(`${id} successfully stored!`); // Created
+        console.log(`Stored ${id}: ${urlInput}`);
+
+        return c.text(`${id} successfully stored!`, 201);
     } catch (error) {
         console.error('Error handling submission:', error);
         return c.text('An error occurred', 500);
     }
 });
+
 
 app.get('/', (c) => {
     return c.html(
