@@ -17,9 +17,16 @@ app.get('/:id', async (c) => {
 	}
 })
 
-app.post('/:id', async (c) => {
+app.post('/submit', async (c) => {
 	try {
-		const id = c.req.param('id')
+		const formData = await c.req.formData();
+
+		const formObject = {};
+		formData.forEach((value, key) => {
+            formObject[key] = value;
+        });
+
+		const id = formObject['userInput'];
 
 
 		const idAlreadyExists = await c.env.KV.get(id)
@@ -28,7 +35,7 @@ app.post('/:id', async (c) => {
 			return c.text(id + ' Already exists')
 		}
 
-		const linkFromKV = await c.env.KV.put(id);
+		await c.env.KV.put(id);
 
 	} catch (error) {
 		console.error('Error handling redirect:', error);
@@ -47,11 +54,13 @@ app.get('/', (c) => {
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 </head>
 <body>
-    <form hx-post="/" hx-include="[name='userInput']" hx-params="*">
-        <label for="userInput">Enter your input:</label>
+    <form hx-post="/submit" hx-trigger="submit" hx-target="#response">
+        <label for="userInput">Enter something:</label>
         <input type="text" id="userInput" name="userInput" required>
-        <button type="submit">Submit</button>
+        <input type="submit" value="Submit">
     </form>
+
+    <div id="response"></div>
 </body>
 </html>
 `
